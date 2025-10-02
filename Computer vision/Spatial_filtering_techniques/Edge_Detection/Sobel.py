@@ -5,9 +5,11 @@ from matplotlib import pyplot as plt
 # Read image in grayscale
 img = cv2.imread('Flower color.jpeg', 0)
 
+gaussian_filtered = cv2.GaussianBlur(img, (3,3), sigmaX=1)
+
 # Sobel X and Y
-sobelx = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=3)  # Gx
-sobely = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=3)  # Gy
+sobelx = cv2.Sobel(gaussian_filtered, cv2.CV_64F, 1, 0, ksize=3)  # Gx
+sobely = cv2.Sobel(gaussian_filtered, cv2.CV_64F, 0, 1, ksize=3)  # Gy
 
 # Combine X and Y
 sobel_combined = cv2.magnitude(sobelx, sobely)
