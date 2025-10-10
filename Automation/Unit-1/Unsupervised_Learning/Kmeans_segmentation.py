@@ -9,7 +9,7 @@ image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 pixels = image_rgb.reshape((-1,3)).astype(np.float32)
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.2)
 
-k = 10  # change for detail
+k = 10  
 _, labels, centers = cv2.kmeans(pixels, k, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
 
 segmented = centers.astype(np.uint8)[labels.flatten()].reshape(image_rgb.shape)

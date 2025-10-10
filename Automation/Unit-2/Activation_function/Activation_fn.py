@@ -1,8 +1,6 @@
-# Experiment 1: Implement and visualize activation functions
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Define activations and derivatives
 def sigmoid(x): return 1 / (1 + np.exp(-x))
 def dsigmoid(x): s = sigmoid(x); return s * (1 - s)
 

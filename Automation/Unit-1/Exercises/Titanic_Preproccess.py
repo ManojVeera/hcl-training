@@ -13,9 +13,7 @@ df = pd.read_csv(url)
 print("Initial data shape:", df.shape)
 print(df.head())
 
-# ---------------------------
 # 1. Handle Missing Values
-# ---------------------------
 # Fill missing 'Age' with median
 age_imputer = SimpleImputer(strategy='median')
 df['Age'] = age_imputer.fit_transform(df[['Age']])
@@ -27,9 +25,7 @@ df['Embarked'] = embarked_imputer.fit_transform(df[['Embarked']]).ravel()
 # Drop 'Cabin' (too many missing) and 'Name', 'Ticket' (not useful here)
 df.drop(columns=['Cabin', 'Name', 'Ticket'], inplace=True)
 
-# ---------------------------
 # 2. Handle Outliers
-# ---------------------------
 # For simplicity, remove extreme outliers in 'Fare' using IQR
 Q1 = df['Fare'].quantile(0.25)
 Q3 = df['Fare'].quantile(0.75)
@@ -39,9 +35,7 @@ upper_bound = Q3 + 1.5*IQR
 
 df = df[(df['Fare'] >= lower_bound) & (df['Fare'] <= upper_bound)]
 
-# ---------------------------
 # 3. Encode Categorical Features
-# ---------------------------
 # Sex: Label Encoding
 le = LabelEncoder()
 df['Sex'] = le.fit_transform(df['Sex'])  # Male=1, Female=0
@@ -49,16 +43,12 @@ df['Sex'] = le.fit_transform(df['Sex'])  # Male=1, Female=0
 # Embarked: One-Hot Encoding
 df = pd.get_dummies(df, columns=['Embarked'], drop_first=True)
 
-# ---------------------------
 # 4. Scale Numeric Features
-# ---------------------------
 numeric_features = ['Age', 'SibSp', 'Parch', 'Fare']
 scaler = StandardScaler()
 df[numeric_features] = scaler.fit_transform(df[numeric_features])
 
-# ---------------------------
 # 5. Split Features and Target
-# ---------------------------
 X = df.drop('Survived', axis=1)
 y = df['Survived']
 

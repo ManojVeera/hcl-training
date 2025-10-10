@@ -2,6 +2,8 @@ import numpy as np
 from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
 
 # --- 1. Load dataset ---
 data = fetch_california_housing(as_frame=True)
@@ -17,10 +19,11 @@ X_test_bias  = np.hstack([np.ones((X_test.shape[0], 1)), X_test])
 
 # --- 4. Compute weights using Normal Equation ---
 # w = (X^T X)^(-1) X^T y
-w = np.linalg.inv(X_train_bias.T @ X_train_bias) @ X_train_bias.T @ y_train
+#w = np.linalg.inv(X_train_bias.T @ X_train_bias) @ X_train_bias.T @ y_train
+#y_pred = X_test_bias @ w
 
-# --- 5. Predict ---
-y_pred = X_test_bias @ w
+model = LinearRegression().fit(X_train, y_train)
+y_pred = model.predict(X_test)
 
 # --- 6. Evaluation ---
 mse = np.mean((y_test - y_pred)**2)
